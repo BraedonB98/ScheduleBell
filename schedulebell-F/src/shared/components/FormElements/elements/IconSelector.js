@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Icon from "../UIElements/Icons";
 import Button from "./Button";
 
-import "./styling/iconSelector.css";
+import "../styling/iconSelector.css";
 
 const IconSelector = (props) => {
   const [searchedIcon, setSearchedIcon] = useState();

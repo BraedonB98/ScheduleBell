@@ -21,7 +21,7 @@ import "./App.css";
 import HomePage from "./landing/pages/Homepage";
 
 //// Styling for importing pages after "landing page" finishes loading
-//const Dashboard = React.lazy(() => import("./users/pages/Dashboard"));
+const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
 
 //*---Content---*//
 
@@ -53,7 +53,7 @@ function App() {
     //Default Routes
     routes = (
       <Routes>
-        {/* <Route path="/pageURL" exact element={<Page />} /> */}
+        <Route path="/auth" exact element={<AuthPage />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
     );
