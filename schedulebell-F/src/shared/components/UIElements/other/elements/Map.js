@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
-import "./styling/Map.css";
+import "../styling/Map.css";
 
 const Map = (props) => {
   const mapRef = useRef();

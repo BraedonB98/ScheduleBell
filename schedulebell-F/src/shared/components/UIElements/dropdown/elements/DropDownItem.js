@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./styling/DropDownMenu.css";
+import "../styling/DropDownMenu.css";
 const DropDownItem = (props) => {
   return (
     <div className="drop-down-menu__item" onClick={props.onClick}>

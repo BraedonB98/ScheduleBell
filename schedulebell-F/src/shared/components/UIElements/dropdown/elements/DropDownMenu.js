@@ -1,5 +1,5 @@
 import React from "react";
-import "./styling/DropDownMenu.css";
+import "../styling/DropDownMenu.css";
 
 const DropDownMenu = (props) => {
   return <div className="drop-down-menu">{props.children}</div>;
