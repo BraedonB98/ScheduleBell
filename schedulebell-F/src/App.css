@@ -1,38 +1,72 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
+
+:root{
+  --colorPrimary: #c8b7a6;
+  --colorPrimaryVariant: #b6c199;
+  --colorSecondary: #7d94b5; /* Cards Buttons */
+  --colorSecondaryVariant: #c29591; /* Nav Bar, Modal Header*/
+  --colorBackground: #393e46; /*Page Background*/
+  --colorSurface: #d5bfbf;
+  --colorError: red;
+  --colorOnImages: #703f37;
+  --colorOnPrimary: #703f37;
+  --colorOnSecondary: #703f37;
+  --colorOnPrimaryVariant: #703f37;
+  --colorOnSecondaryVariant: #703f37;
+  --colorOnBackground: #703f37;
+  --colorOnSurface: #703f37;
+  --colorOnError: #703f37;
+
+  --fontFamily : "Open Sans", sans-serif;
+  --navHeight: 4rem;
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#content {
+  width: 100%;
+  height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html {
+  font-family: var(--fontFamily);/*! see if this is actually working*/
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body {
+  margin: 0;
+  background: var(--colorBackground);
+}
+
+/*App wide classes*/
+.center {
+  text-align: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+/*Transitions*/
+.slide-in-left-enter {
+  transform: translateX(-100%);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.slide-in-left-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: all 200ms;
 }
+
+.slide-in-left-exit {
+  transform: translateX(0%);
+  opacity: 1;
+}
+
+.slide-in-left-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: all 200ms;
+}
+
+

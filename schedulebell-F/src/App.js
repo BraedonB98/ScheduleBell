@@ -15,11 +15,10 @@ import { UserAuth } from "./shared/hooks/auth-hook";
 import MainNavigation from "./shared/components/Navigation/elements/MainNavigation";
 import LoadingSpinner from "./shared/components/UIElements/other/elements/LoadingSpinner";
 //Styling
-import logo from "./logo.svg";
 import "./App.css";
 
 //Pages
-//import HomePage from "./users/pages/HomePage";
+import HomePage from "./landing/pages/Homepage";
 
 //// Styling for importing pages after "landing page" finishes loading
 //const Dashboard = React.lazy(() => import("./users/pages/Dashboard"));
@@ -54,8 +53,8 @@ function App() {
     //Default Routes
     routes = (
       <Routes>
-        {/* <Route path="/pageURL" exact element={<Page />} />
-        <Route path="*" element={<Default />} /> */}
+        {/* <Route path="/pageURL" exact element={<Page />} /> */}
+        <Route path="*" element={<HomePage />} />
       </Routes>
     );
   }
