@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import NavItem from "./NavItem";
-import DropDownMenu from "../UIElements/DropDownMenu";
-import DropDownItem from "../UIElements/DropDownItem";
-import { AuthContext } from "../../context/auth-context";
+import DropDownMenu from "../../UIElements/dropdown/elements/DropDownMenu";
+import DropDownItem from "../../UIElements/dropdown/elements/DropDownItem";
+import { AuthContext } from "../../../context/auth-context";
 import { useNavigate } from "react-router-dom";
 
-import "./styling/NavLinks.css";
+import "../styling/NavLinks.css";
 
 const NavLinks = (props) => {
   const navigate = useNavigate();
