@@ -6,6 +6,7 @@ import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import Backdrop from "../../UIElements/other/elements/Backdrop";
 import "../styling/MainNavigation.css";
+import logo from "../../../../logo.svg";
 
 const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -40,8 +41,8 @@ const MainNavigation = (props) => {
             {" "}
             <img
               className="main-navigation__logo-image"
-              src={`./logo.svg`}
-              alt="Speed Info Manager"
+              src={logo}
+              alt="App Logo"
             />
           </Link>
         </h1>
