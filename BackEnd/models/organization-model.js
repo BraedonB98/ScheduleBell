@@ -4,10 +4,9 @@ const Schema = mongoose.Schema;
 
 const organization = new Schema({
   name: { type: String },
-  //ID
+  authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   imageUrl: { type: String },
   contactEmails: [{ type: String }],
-  authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }], //users authorized to edit organization information
   accountType: { type: String },
   notes: { type: String },
   locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
