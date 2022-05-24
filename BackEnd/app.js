@@ -9,10 +9,10 @@ const HttpError = require("./models/http-error");
 const app = express();
 
 //-------------------Routes-----------------------
-const inventory = require("./routes/inventory-routes");
-const store = require("./routes/store-routes");
+const organization = require("./routes/organization-routes");
+const location = require("./routes/location-routes");
+const schedule = require("./routes/schedule-routes");
 const user = require("./routes/user-routes");
-const part = require("./routes/part-routes");
 
 //-----------------MiddleWare--------------------
 app.use(bodyParser.json());
