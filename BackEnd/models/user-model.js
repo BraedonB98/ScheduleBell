@@ -11,6 +11,7 @@ const userSchema = new Schema({
   email: { type: String },
   phoneNumber: { type: String },
   password: { type: String },
+  primaryLocation:{ type: mongoose.Types.ObjectId, ref: "Location" },
   payRate:{type:String},
   availability: [{type:String}],
 });
