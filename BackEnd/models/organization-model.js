@@ -10,6 +10,7 @@ const organization = new Schema({
   accountType: { type: String },
   notes: { type: String },
   locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
+  organizationColorScheme: [{type: String}],
 });
 
 module.exports = mongoose.model("Organization", organizationSchema);
