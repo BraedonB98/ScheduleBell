@@ -24,7 +24,7 @@ router.patch("/availability", userController.editAvailability);
 
 router.delete("/altLocation", userController.removeAltLocation);
 
-router.get("/general", userController.general); //fn, ln, pn, jc, imageurl, email, phoneNumber, primaryLocation
+router.get("/general", userController.getGeneral); //fn, ln, pn, jc, imageurl, email, phoneNumber, primaryLocation
 
 router.get("/locations", userController.getLocations); //primary followed by alt
 

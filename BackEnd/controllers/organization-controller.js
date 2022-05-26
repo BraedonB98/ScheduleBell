@@ -11,7 +11,9 @@ const User = require("../models/user-model");
 //----------------------Controllers-------------------------
 const createOrganization = async (req, res, next) => {};
 const editOrganizationGeneral = async (req, res, next) => {};
-const editOrganizationAccountType = async (req, res, next) => {};
+const editOrganizationAccountType = async (req, res, next) => {
+  //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
+};
 const editOrganizationAuthorizedUsers = async (req, res, next) => {};
 const patchOrganizationImage = async (req, res, next) => {};
 const deleteOrganization = async (req, res, next) => {};
@@ -21,7 +23,7 @@ const getOrganizationLocations = async (req, res, next) => {};
 //---------------------Exports------------------------------
 exports.create = createOrganization;
 exports.editGeneral = editOrganizationGeneral;
-exports.editAccountType = editOrganizationAccountType; //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
+exports.editAccountType = editOrganizationAccountType;
 exports.editAuthorizedUsers = editOrganizationAuthorizedUsers;
 exports.patchImage = patchOrganizationImage;
 exports.delete = deleteOrganization;

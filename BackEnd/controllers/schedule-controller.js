@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 //------------------Models------------------------------
 const HttpError = require("../models/http-error");
+const Schedule = require("../models/schedule-model");
 const Location = require("../models/location-model");
 const User = require("../models/user-model");
 //----------------------Controllers-------------------------
