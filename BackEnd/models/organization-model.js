@@ -6,7 +6,6 @@ const organizationSchema = new Schema({
   name: { type: String },
   authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   imageUrl: { type: String },
-  contactEmails: [{ type: String }],
   accountType: { type: String },
   notes: { type: String },
   locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
