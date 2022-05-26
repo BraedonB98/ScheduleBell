@@ -30,6 +30,6 @@ router.get("/staffArchived/:lid", locationController.getArchivedStaff);
 
 router.get("/schedule/:lid", locationController.getActiveSchedule); //Gets active schedule
 
-router.get("/archivedSchedule/:lid", locationController.getLocationStaff);
+router.get("/archivedSchedule/:lid", locationController.getArchivedSchedule);
 
 module.exports = router;
