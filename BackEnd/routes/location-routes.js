@@ -10,11 +10,15 @@ router.use(checkAuth); // every route after this requires an token
 
 router.post("/add", locationController.add);
 
+router.patch("/addStaff", locationController.addStaff);
+
 router.patch("/general", locationController.editGeneral); //including notes
 
 router.patch("/image/:lid", locationController.patchImage);
 
 router.delete("/remove/:lid", locationController.delete);
+
+router.delete("/removeStaff", locationController.removeStaff);
 
 router.get("/general/:lid", locationController.getGeneral); //name, organization, location number, imageUrl, location
 
