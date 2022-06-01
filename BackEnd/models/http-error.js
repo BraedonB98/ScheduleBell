@@ -3,6 +3,7 @@ class HttpError extends Error {
     super(message); //Add a message property
     this.code = errorCode; //Adds a "code" property
     if (this.code === 500) {
+      //!make this all 500 type errors
       //!add to server log
     }
   }

@@ -53,6 +53,9 @@ const getUser = (identifier, searchType) => {
 //Restrict User takes in a user to restrict and the level of restrictions to apply
 //Then returns a user object with different amounts of information depending on level
 const restrictUser = (user, restrictionLevel) => {
+  if (!(user instanceof User)) {
+    return new HttpError("Did not receive a user object to restrict", 400);
+  }
   let userRestricted;
   if (restrictionLevel === "generalEmployees") {
     userRestricted = {
