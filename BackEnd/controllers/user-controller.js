@@ -11,6 +11,7 @@ const User = require("../models/user-model");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;
+const getUser = userHelper.getUser;
 
 //----------------------Controllers-------------------------
 const login = async (req, res, next) => {
@@ -18,9 +19,11 @@ const login = async (req, res, next) => {
   const { employeeNumber, password } = req.body;
   //Locating User
   let user;
-  user = await getUserByEN(employeeNumber);
-  if (user.error) {
-    return next(new HttpError(user.errorMessage, user.errorCode));
+  user = await getUser(employeeNumber, "employeeNumber");
+  //Checking if error when getting user
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
   }
   //Checking Password
   let isValidPassword;
@@ -47,7 +50,6 @@ const login = async (req, res, next) => {
       { expiresIn: "2h" }
     );
   } catch (error) {
-    console.log(error);
     return next(
       new HttpError(
         "Failed to make a secure connection, please try again later",

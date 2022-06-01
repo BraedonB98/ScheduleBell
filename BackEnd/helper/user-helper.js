@@ -8,7 +8,7 @@ const User = require("../models/user-model");
 //getUser takes in an identifier and searchType and if there is a user in the database with
 //a user that fits those it will return the user
 const getUser = (identifier, searchType) => {
-  getUserByEN = async (EN) => {
+  const getUserByEN = async (EN) => {
     let user;
     if (EN === null) {
       return new HttpError("no employee number provided", 400);
