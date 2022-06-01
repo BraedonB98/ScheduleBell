@@ -2,14 +2,62 @@
 const mongoose = require("mongoose");
 
 //------------------Modules--------------------------
-
+const userHelper = require("../helper/user-helper");
 //------------------Models------------------------------
 const HttpError = require("../models/http-error");
 const Schedule = require("../models/schedule-model");
 const Location = require("../models/location-model");
 const User = require("../models/user-model");
+
+//-----------------HelperFunctions------------------
+const restrictUser = userHelper.restrictUser;
+
 //----------------------Controllers-------------------------
-const login = async (req, res, next) => {};
+const login = async (req, res, next) => {
+  //check first login if true then change password
+  const { employeeNumber, password } = req.body;
+  //Locating User
+  let user;
+  user = await getUserByEN(employeeNumber);
+  if (user.error) {
+    return next(new HttpError(user.errorMessage, user.errorCode));
+  }
+  //Checking Password
+  let isValidPassword;
+  try {
+    isValidPassword = await bcrypt.compare(password, user.password);
+  } catch (error) {
+    return next(
+      new HttpError("Failed to check credentials, please try again later", 500)
+    );
+  }
+  if (!isValidPassword) {
+    return next(new HttpError("Login Failed,invalid credentials", 401));
+  }
+  //JWT Token
+  let token;
+  try {
+    token = jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+      },
+      process.env.JWT_Key,
+      { expiresIn: "2h" }
+    );
+  } catch (error) {
+    console.log(error);
+    return next(
+      new HttpError(
+        "Failed to make a secure connection, please try again later",
+        500
+      )
+    );
+  }
+  const userRestricted = restrictUser(user, "actualUser");
+  res.json(userRestricted);
+};
 const addUser = async (req, res, next) => {};
 const general = async (req, res, next) => {};
 const transferPrimaryLocation = async (req, res, next) => {};
