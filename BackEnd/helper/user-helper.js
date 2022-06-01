@@ -35,18 +35,10 @@ const getUser = (identifier, searchType) => {
     try {
       user = await User.findById(uid);
     } catch (error) {
-      return {
-        error: error,
-        errorMessage: "Could not access user in database",
-        errorCode: 500,
-      };
+      return new HttpError("Could not access user in database", 500);
     }
     if (!user) {
-      return {
-        error: true,
-        errorMessage: "User not in database",
-        errorCode: 404,
-      };
+      return new HttpError("User not in database", 404);
     }
     return user;
   };
@@ -58,7 +50,7 @@ const getUser = (identifier, searchType) => {
   }
 };
 
-//Restrict User takes in a user to restrict and the level of restiction to apply
+//Restrict User takes in a user to restrict and the level of restrictions to apply
 //Then returns a user object with different amounts of information depending on level
 const restrictUser = (user, restrictionLevel) => {
   let userRestricted;
@@ -152,5 +144,5 @@ const restrictUser = (user, restrictionLevel) => {
 };
 
 //-------------Exports--------------
-
+exports.getUser = getUser;
 exports.restrictUser = restrictUser;
