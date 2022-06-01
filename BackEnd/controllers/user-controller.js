@@ -60,7 +60,96 @@ const login = async (req, res, next) => {
   const userRestricted = restrictUser(user, "actualUser");
   res.json(userRestricted);
 };
-const addUser = async (req, res, next) => {};
+const addUser = async (req, res, next) => {
+  const uid = req.userData.id;
+  let user = await getUser(uid, "id");
+  //Checking if error when getting user
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  let accessLevel = false;
+  //!checking if request is authorized
+  if (!accessLevel) {
+    return next(
+      new HttpError("You dont have required authorization to add a user", 401)
+    );
+  }
+
+  const {
+    firstName,
+    lastName,
+    preferredName,
+    employeeId,
+    email,
+    phoneNumber,
+    jobCode,
+    permissions,
+    password,
+  } = req.body; //will set password automatically to employeeId
+
+  //Checking if user already has account
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+    if (!existingUser) {
+      existingUser = await User.findOne({ phoneNumber: phoneNumber });
+    }
+  } catch (error) {
+    return next(
+      new HttpError("Sign up failed, Could not access database", 500)
+    );
+  }
+
+  if (existingUser) {
+    return next(
+      new HttpError("Could not create user, credentials already in use", 422)
+    );
+  }
+
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password, 12); //12 is the number of salting rounds(how secure)
+  } catch (error) {
+    return next(new HttpError("Could not set password correctly", 500));
+  }
+
+  //Creating new user
+  const createdUser = new User({
+    firstName,
+    lastName,
+    preferredName,
+    jobCode,
+    imageUrl: "data/uploads/images/default.svg",
+    email,
+    phoneNumber: "+1" + phoneNumber,
+    password: hashedPassword,
+    employeeId,
+    certifications: [],
+    permissions,
+  });
+  //Sending new user to DB
+  try {
+    await createdUser.save();
+  } catch (error) {
+    return next(new HttpError("Creating user failed", 500));
+  }
+
+  const userRestricted = {
+    firstName: createdUser.firstName,
+    lastName: createdUser.lastName,
+    preferredName: createdUser.lastName,
+    employeeId: createdUser.employeeId,
+    email: createdUser.email,
+    phoneNumber: createdUser.phoneNumber,
+    jobCode: createdUser.jobCode,
+    permissions: createdUser.permissions,
+    id: createdUser._id,
+    imageUrl: createdUser.imageUrl,
+  };
+
+  res.json(userRestricted);
+};
 const general = async (req, res, next) => {};
 const transferPrimaryLocation = async (req, res, next) => {};
 const editJobCode = async (req, res, next) => {};
