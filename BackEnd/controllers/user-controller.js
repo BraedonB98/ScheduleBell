@@ -3,15 +3,18 @@ const mongoose = require("mongoose");
 
 //------------------Modules--------------------------
 const userHelper = require("../helper/user-helper");
-//------------------Models------------------------------
+const organizationHelper = require("../helper/organization-helper");
+const locationHelper = require("../helper/location-helper");
+//------------------Models/Classes------------------------------
 const HttpError = require("../models/http-error");
-const Schedule = require("../models/schedule-model");
-const Location = require("../models/location-model");
 const User = require("../models/user-model");
+const userPermissionValidation = require("../validation/userPermissionValidation");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;
 const getUser = userHelper.getUser;
+const getOrganization = organizationHelper.getOrganization;
+const getLocation = locationHelper.getLocation;
 
 //----------------------Controllers-------------------------
 const login = async (req, res, next) => {
@@ -60,53 +63,69 @@ const login = async (req, res, next) => {
   const userRestricted = restrictUser(user, "actualUser");
   res.json(userRestricted);
 };
-const addUser = async (req, res, next) => {
-  const uid = req.userData.id;
-  let user = await getUser(uid, "id");
-  //Checking if error when getting user
-  if (user instanceof HttpError) {
-    const newError = user;
-    return next(newError);
-  }
-  let accessLevel = false;
-  //!checking if request is authorized
-  if (!accessLevel) {
-    return next(
-      new HttpError("You dont have required authorization to add a user", 401)
-    );
-  }
 
+const addUser = async (req, res, next) => {
   const {
     firstName,
     lastName,
     preferredName,
-    employeeId,
+    employeeNumber,
+    position,
     email,
     phoneNumber,
-    jobCode,
-    permissions,
-    password,
-  } = req.body; //will set password automatically to employeeId
+    primaryLocation,
+    payRate,
+  } = req.body;
+  //will set password automatically to lastname employeeNumber
+  let password = `${lastName}${employeeNumber}`;
+  //getting requesting user data
+  const uid = req.userData.id;
+  //getting requested user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
 
+  //getting location
+  let location = getLocation(primaryLocation, "locationNumber");
+  if (location instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for location
+  let upv = new userPermissionValidation(user, location, organization);
+  if (upv.newUser()) {
+    return next(
+      new HttpError(
+        "You dont have required authorization to add a user to this location",
+        401
+      )
+    );
+  }
   //Checking if user already has account
-  let existingUser;
+  let newUser;
   try {
-    existingUser = await User.findOne({ email: email });
-    if (!existingUser) {
-      existingUser = await User.findOne({ phoneNumber: phoneNumber });
+    newUser = await User.findOne({ email: email });
+    if (!newUser) {
+      newUser = await User.findOne({ phoneNumber: phoneNumber });
     }
   } catch (error) {
     return next(
-      new HttpError("Sign up failed, Could not access database", 500)
+      new HttpError("AddUser failed, Could not access database", 500)
     );
   }
-
-  if (existingUser) {
+  if (newUser) {
     return next(
       new HttpError("Could not create user, credentials already in use", 422)
     );
   }
-
   let hashedPassword;
   try {
     hashedPassword = await bcrypt.hash(password, 12); //12 is the number of salting rounds(how secure)
@@ -119,35 +138,35 @@ const addUser = async (req, res, next) => {
     firstName,
     lastName,
     preferredName,
-    jobCode,
+    employeeNumber,
+    position,
     imageUrl: "data/uploads/images/default.svg",
     email,
     phoneNumber: "+1" + phoneNumber,
     password: hashedPassword,
-    employeeId,
-    certifications: [],
-    permissions,
+    organization,
+    primaryLocation: location,
+    alternateLocations: [],
+    payRate,
+    availability: [],
+    updateProperties: ["password", "availability", "imageUrl"],
   });
+
+  //Adding to Location
+  location.activeStaff.push(createdUser);
   //Sending new user to DB
   try {
-    await createdUser.save();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdUser.save({ session: sess });
+    await location.save({ session: sess });
+    await sess.commitTransaction();
   } catch (error) {
-    return next(new HttpError("Creating user failed", 500));
+    return next(
+      new HttpError("Creating User failed when adding to database", 500)
+    );
   }
-
-  const userRestricted = {
-    firstName: createdUser.firstName,
-    lastName: createdUser.lastName,
-    preferredName: createdUser.lastName,
-    employeeId: createdUser.employeeId,
-    email: createdUser.email,
-    phoneNumber: createdUser.phoneNumber,
-    jobCode: createdUser.jobCode,
-    permissions: createdUser.permissions,
-    id: createdUser._id,
-    imageUrl: createdUser.imageUrl,
-  };
-
+  const userRestricted = restrictUser(createdUser, "primaryLocationManager");
   res.json(userRestricted);
 };
 const general = async (req, res, next) => {};

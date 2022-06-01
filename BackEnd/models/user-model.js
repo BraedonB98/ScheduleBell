@@ -12,10 +12,12 @@ const userSchema = new Schema({
   email: { type: String },
   phoneNumber: { type: String },
   password: { type: String },
+  organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
   primaryLocation: { type: mongoose.Types.ObjectId, ref: "Location" },
   alternateLocations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
   payRate: { type: String },
   availability: [{ type: String }],
+  updateProperties: [{ type: String }],
 });
 
 module.exports = mongoose.model("User", userSchema);

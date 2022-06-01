@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const locationSchema = new Schema({
   name: { type: String },
-  organization:{type: mongoose.Types.ObjectId, ref: "Organization" },
+  organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
   authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   locationNumber: { type: String },
   imageUrl: { type: String },
@@ -15,8 +15,8 @@ const locationSchema = new Schema({
   notes: { type: String },
   activeStaff: { type: mongoose.Types.ObjectId, ref: "User" },
   archivedStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-  schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" },//1 months schedule
-  archivedSchedule:[{type:mongoose.Types.ObjectId, ref:"Schedule"}]
+  schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" }, //1 months schedule
+  archivedSchedule: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }],
 });
 
 module.exports = mongoose.model("Location", locationSchema);
