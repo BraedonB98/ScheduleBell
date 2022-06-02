@@ -100,7 +100,48 @@ const createOrganization = async (req, res, next) => {
   const userRestricted = restrictUser(organizationCreator, "actualUser");
   res.json({ user: userRestricted, organization: organization });
 };
-const editOrganizationGeneral = async (req, res, next) => {};
+const editOrganizationGeneral = async (req, res, next) => {
+  const { name, organizationColorScheme } = req.body;
+  const uid = req.userData.id;
+  //getting requesting user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for organization
+  let upv = new userPermissionValidation(user, "", organization); //no location required
+  upv = upv.organizationPatch();
+  if (upv) {
+    return next(upv);
+  }
+
+  //adding to organization (there is a more efficient way of doing this using ...?)
+  if (name) {
+    organization.name = name;
+  }
+  if (organizationColorScheme) {
+    organization.name = name;
+  }
+  //saving change
+  try {
+    await organization.save();
+  } catch (error) {
+    return next(
+      new HttpError(
+        "general changes to organization failed when adding to database",
+        500
+      )
+    );
+  }
+  res.json(organization);
+};
 const editOrganizationAccountType = async (req, res, next) => {
   //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
 };
@@ -140,13 +181,11 @@ const addOrganizationAuthorizedUser = async (req, res, next) => {
   } catch (error) {
     return next(
       new HttpError(
-        "Adding authorized user to organization when adding to database",
+        "Adding authorized user to organization failed when adding to database",
         500
       )
     );
   }
-
-  const userRestricted = restrictUser(userAdding, "organizationManager");
   res.json(organization);
 };
 const removeOrganizationAuthorizedUser = async (req, res, next) => {
