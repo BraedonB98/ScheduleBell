@@ -14,7 +14,9 @@ router.patch("/general/:oid", organizationController.editGeneral); //name, image
 
 router.patch("/accountType/:oid", organizationController.editAccountType); //upgrade subscription
 
-router.patch("/admins/:oid", organizationController.editAuthorizedUsers); //add or remove admins (email both removed and added)
+router.patch("/admins/:oid", organizationController.addAuthorizedUser); //add admin (email added)
+
+router.patch("/admins/:oid", organizationController.removeAuthorizedUser); //remove admin(email removed)
 
 router.patch("/image/:oid", organizationController.patchImage);
 

@@ -49,7 +49,7 @@ const createOrganization = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Could not set password correctly", 500));
   }
-  //adding organization creator
+  //creating organization creator
   const organizationCreator = new User({
     firstName: adminFirstName,
     lastName: adminLastName,
@@ -66,7 +66,7 @@ const createOrganization = async (req, res, next) => {
     availability: [],
     updateProperties: ["availability", "imageUrl"],
   });
-  //adding organization
+  //creating organization
   const organization = new Organization({
     name: organizationName,
     accountAdmin: organizationCreator,
@@ -96,7 +96,13 @@ const editOrganizationGeneral = async (req, res, next) => {};
 const editOrganizationAccountType = async (req, res, next) => {
   //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
 };
-const editOrganizationAuthorizedUsers = async (req, res, next) => {};
+const addOrganizationAuthorizedUser = async (req, res, next) => {
+  const { user } = req.body;
+};
+const removeOrganizationAuthorizedUser = async (req, res, next) => {
+  //if removing accountAdmin: check req.body for new accountAdmin and only allow if authorizedUsers
+  const { user, accountAdmin } = req.body;
+};
 const patchOrganizationImage = async (req, res, next) => {};
 const deleteOrganization = async (req, res, next) => {};
 const getOrganizationGeneral = async (req, res, next) => {};
@@ -106,7 +112,8 @@ const getOrganizationLocations = async (req, res, next) => {};
 exports.create = createOrganization;
 exports.editGeneral = editOrganizationGeneral;
 exports.editAccountType = editOrganizationAccountType;
-exports.editAuthorizedUsers = editOrganizationAuthorizedUsers;
+exports.addAuthorizedUser = addOrganizationAuthorizedUser;
+exports.removeAuthorizedUser = removeOrganizationAuthorizedUser;
 exports.patchImage = patchOrganizationImage;
 exports.delete = deleteOrganization;
 exports.getGeneral = getOrganizationGeneral;
