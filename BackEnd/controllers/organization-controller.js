@@ -2,12 +2,21 @@
 const mongoose = require("mongoose");
 
 //------------------Modules--------------------------
-
+const userHelper = require("../helper/user-helper");
+const organizationHelper = require("../helper/organization-helper");
+const locationHelper = require("../helper/location-helper");
 //------------------Models------------------------------
 const HttpError = require("../models/http-error");
 const Organization = require("../models/organization-model");
 const Location = require("../models/location-model");
 const User = require("../models/user-model");
+
+//-----------------HelperFunctions------------------
+const restrictUser = userHelper.restrictUser;
+const getUser = userHelper.getUser;
+const getOrganization = organizationHelper.getOrganization;
+const getLocation = locationHelper.getLocation;
+
 //----------------------Controllers-------------------------
 const createOrganization = async (req, res, next) => {
   const {
@@ -60,7 +69,6 @@ const createOrganization = async (req, res, next) => {
     email: adminEmail,
     phoneNumber: "+1" + adminPhoneNumber,
     password: hashedPassword,
-    organization,
     alternateLocations: [],
     payRate: adminPayRate,
     availability: [],
@@ -69,8 +77,8 @@ const createOrganization = async (req, res, next) => {
   //creating organization
   const organization = new Organization({
     name: organizationName,
-    accountAdmin: organizationCreator,
-    authorizedUsers: [organizationCreator],
+    accountAdmin: organizationCreator.id,
+    authorizedUsers: [organizationCreator.id],
     imageUrl: organizationImageUrl,
     accountType: "Trial",
     locations: [],
@@ -78,7 +86,7 @@ const createOrganization = async (req, res, next) => {
   });
 
   //adding organization to user now that organization exists
-  organizationCreator.organization = organization;
+  organizationCreator.organization = organization.id;
   //Sending new user to DB
   try {
     const sess = await mongoose.startSession();
@@ -89,7 +97,7 @@ const createOrganization = async (req, res, next) => {
   } catch (error) {
     return next(new HttpError("Creating organization failed", 500));
   }
-  const userRestricted = restrictUser(createdUser, "actualUser");
+  const userRestricted = restrictUser(organizationCreator, "actualUser");
   res.json({ user: userRestricted, organization: organization });
 };
 const editOrganizationGeneral = async (req, res, next) => {};
@@ -97,11 +105,52 @@ const editOrganizationAccountType = async (req, res, next) => {
   //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
 };
 const addOrganizationAuthorizedUser = async (req, res, next) => {
-  const { user } = req.body;
+  const { userAdding } = req.body;
+  const uid = req.userData.id;
+  //getting requesting user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for organization
+  let upv = new userPermissionValidation(user, "", organization); //no location required
+  if (upv.organizationPatch()) {
+    return next(upv.organizationPatch());
+  }
+  //getting new authorized user (make sure they exist)
+  userAdding = await getUser(userAdding, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+
+  //adding to organization
+  organization.authorizedUsers.push(userAdding.id);
+  //saving change
+  try {
+    await organization.save();
+  } catch (error) {
+    return next(
+      new HttpError(
+        "Adding authorized user to organization when adding to database",
+        500
+      )
+    );
+  }
+
+  const userRestricted = restrictUser(userAdding, "organizationManager");
+  res.json(organization);
 };
 const removeOrganizationAuthorizedUser = async (req, res, next) => {
   //if removing accountAdmin: check req.body for new accountAdmin and only allow if authorizedUsers
-  const { user, accountAdmin } = req.body;
+  const { userRemoving, accountAdmin } = req.body;
 };
 const patchOrganizationImage = async (req, res, next) => {};
 const deleteOrganization = async (req, res, next) => {};

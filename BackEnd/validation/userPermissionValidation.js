@@ -29,6 +29,21 @@ class userPermissionValidation {
   }
   newUser() {
     //check if user is authorized user of location, if so return false else return error
+    // if (not allowed to add user) {
+    //   new HttpError(
+    //     "You dont have required authorization to add a user to this location",
+    //     403
+    //   );
+    // }
+    return false;
+  }
+  organizationPatch() {
+    // if (not allowed authorized user on organization) {
+    //   new HttpError(
+    //     "You dont have required authorization to change organization",
+    //     403
+    //   );
+    // }
     return false;
   }
 }

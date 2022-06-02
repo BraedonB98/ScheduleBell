@@ -102,12 +102,7 @@ const addUser = async (req, res, next) => {
   //checking requesters permission for location
   let upv = new userPermissionValidation(user, location, organization);
   if (upv.newUser()) {
-    return next(
-      new HttpError(
-        "You dont have required authorization to add a user to this location",
-        401
-      )
-    );
+    return next(upv.newUser()); //should return http error if its not false
   }
   //Checking if user already has account
   let newUser;
