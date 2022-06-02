@@ -253,10 +253,32 @@ const getOrganizationGeneral = async (req, res, next) => {
   if (upv instanceof HttpError) {
     return next(upv);
   }
-  organization = restrictOrganization(organization, upv);
+  organization = restrictOrganization(organization, upv); //restricts organization return data based on user permissions
   res.json(organization);
 };
-const getOrganizationAccountType = async (req, res, next) => {};
+const getOrganizationAccountType = async (req, res, next) => {
+  const uid = req.userData.id;
+  //getting requesting user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for organization
+  let upv = new userPermissionValidation(user, "", organization); //no location required
+  upv = upv.getOrganization(); //will return what access level they have
+  if (upv instanceof HttpError) {
+    return next(upv);
+  }
+  organization = restrictOrganization(organization, upv); //restricts organization return data based on user permissions
+  res.json(organization);
+};
 const getOrganizationLocations = async (req, res, next) => {};
 //---------------------Exports------------------------------
 exports.create = createOrganization;
