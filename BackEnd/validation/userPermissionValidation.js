@@ -46,6 +46,24 @@ class userPermissionValidation {
     // }
     return false;
   }
+  getOrganization() {
+    // if(organizationAdmin)
+    // {
+    //   return "accountAdmin";
+    // }
+    // else if(authorizedUser on organization)
+    // {
+    //   return "authorizedUser";
+    // }
+    // else if(employeeOrganization === organization)
+    // {
+    //   return "generalEmployee";
+    // }
+    // else{
+    //   return ("public")
+    // }
+    return "accountAdmin";
+  }
 }
 
 //-------------Exports--------------

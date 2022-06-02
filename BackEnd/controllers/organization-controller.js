@@ -13,6 +13,7 @@ const User = require("../models/user-model");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;
+const restrictOrganization = organizationHelper.restrictOrganization;
 const getUser = userHelper.getUser;
 const getOrganization = organizationHelper.getOrganization;
 const getLocation = locationHelper.getLocation;
@@ -192,9 +193,69 @@ const removeOrganizationAuthorizedUser = async (req, res, next) => {
   //if removing accountAdmin: check req.body for new accountAdmin and only allow if authorizedUsers
   const { userRemoving, accountAdmin } = req.body;
 };
-const patchOrganizationImage = async (req, res, next) => {};
-const deleteOrganization = async (req, res, next) => {};
-const getOrganizationGeneral = async (req, res, next) => {};
+const patchOrganizationImage = async (req, res, next) => {
+  const { imageUrl } = req.body;
+  const uid = req.userData.id;
+  //getting requesting user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for organization
+  let upv = new userPermissionValidation(user, "", organization); //no location required
+  upv = upv.organizationPatch();
+  if (upv) {
+    return next(upv);
+  }
+
+  //adding to organization (there is a more efficient way of doing this using ...?)
+  organization.imageUrl = imageUrl;
+  //saving change
+  try {
+    await organization.save();
+  } catch (error) {
+    return next(
+      new HttpError(
+        "general changes to organization failed when adding to database",
+        500
+      )
+    );
+  }
+  res.json(organization);
+};
+const deleteOrganization = async (req, res, next) => {
+  //this will need to go through and remove all locations from database as well as locations ids from all users listed at each location(and alts)
+};
+const getOrganizationGeneral = async (req, res, next) => {
+  const uid = req.userData.id;
+  //getting requesting user
+  let user = await getUser(uid, "id");
+  if (user instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //getting organization
+  let organization = getOrganization(user.organization, "oid");
+  if (organization instanceof HttpError) {
+    const newError = user;
+    return next(newError);
+  }
+  //checking requesters permission for organization
+  let upv = new userPermissionValidation(user, "", organization); //no location required
+  upv = upv.getOrganization(); //will return what access level they have
+  if (upv instanceof HttpError) {
+    return next(upv);
+  }
+  organization = restrictOrganization(organization, upv);
+  res.json(organization);
+};
 const getOrganizationAccountType = async (req, res, next) => {};
 const getOrganizationLocations = async (req, res, next) => {};
 //---------------------Exports------------------------------
