@@ -272,12 +272,11 @@ const getOrganizationAccountType = async (req, res, next) => {
   }
   //checking requesters permission for organization
   let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.getOrganization(); //will return what access level they have
+  upv = upv.getOrganization(); //!add min auth
   if (upv instanceof HttpError) {
     return next(upv);
   }
-  organization = restrictOrganization(organization, upv); //restricts organization return data based on user permissions
-  res.json(organization);
+  res.json(organization.accountType);
 };
 const getOrganizationLocations = async (req, res, next) => {};
 //---------------------Exports------------------------------

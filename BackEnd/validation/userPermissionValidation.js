@@ -46,7 +46,8 @@ class userPermissionValidation {
     // }
     return false;
   }
-  getOrganization() {
+  getOrganization(minAuth) {
+    //if user does not meet minAuth then it will return an HTTPERROR
     // if(organizationAdmin)
     // {
     //   return "accountAdmin";
