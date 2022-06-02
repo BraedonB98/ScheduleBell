@@ -121,8 +121,9 @@ const addOrganizationAuthorizedUser = async (req, res, next) => {
   }
   //checking requesters permission for organization
   let upv = new userPermissionValidation(user, "", organization); //no location required
-  if (upv.organizationPatch()) {
-    return next(upv.organizationPatch());
+  upv = upv.organizationPatch();
+  if (upv) {
+    return next(upv);
   }
   //getting new authorized user (make sure they exist)
   userAdding = await getUser(userAdding, "id");
