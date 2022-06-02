@@ -80,7 +80,7 @@ const addUser = async (req, res, next) => {
   let password = `${lastName}${employeeNumber}`;
   //getting requesting user data
   const uid = req.userData.id;
-  //getting requested user
+  //getting requesting user
   let user = await getUser(uid, "id");
   if (user instanceof HttpError) {
     const newError = user;
@@ -121,7 +121,7 @@ const addUser = async (req, res, next) => {
       new HttpError("AddUser failed, Could not access database", 500)
     );
   }
-  if (newUser) {
+  if (!newUser instanceof User) {
     return next(
       new HttpError("Could not create user, credentials already in use", 422)
     );
@@ -166,6 +166,7 @@ const addUser = async (req, res, next) => {
       new HttpError("Creating User failed when adding to database", 500)
     );
   }
+
   const userRestricted = restrictUser(createdUser, "primaryLocationManager");
   res.json(userRestricted);
 };

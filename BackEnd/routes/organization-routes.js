@@ -6,9 +6,9 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.use(checkAuth); // every route after this requires an token
+router.post("/create", organizationController.create);
 
-router.post("/create", organizationController.create); //eventually move this above check auth, for now new Org has to reach out to admin
+router.use(checkAuth); // every route after this requires an token
 
 router.patch("/general/:oid", organizationController.editGeneral); //name, image, colorScheme
 
