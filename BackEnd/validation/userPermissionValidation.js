@@ -1,73 +1,67 @@
 //--------------------Imports-----------------
-const mongoose = require("mongoose");
 const HttpError = require("../models/http-error");
-const User = require("../models/user-model");
 
-//------------------Classes--------------------
+//------------------Class--------------------
 class userPermissionValidation {
   user;
   organization;
-  location;
+  locations;
+  locationsAuthorized;
+  organizationAdmin;
+  organizationAuthorizedUser;
 
-  constructor(user, location) {
-    //only requires user but saves from having to get from database if provided by outside function(already queried)
+  constructor(user, organization) {
     this.user = user;
-    if (location) {
-      this.location = location;
+    this.organization = organization;
+    this.organizationAdmin = this.user === this.organization.accountAdmin;
+    this.organizationAuthorizedUser =
+      this.organizationAdmin ||
+      this.organization.authorizedUsers.includes(this.user);
+    if (this.organizationAuthorizedUser) {
+      //if authorized user they have access to all locations
+      this.locationsAuthorized = organization.locations;
+      this.locations = organization.locations;
+    } else {
+      this.locations = user.alternateLocations;
+      this.locations.push(user.primaryLocation);
     }
   }
-  checkAuthLevel(minAuth) {
-    //translating min auth to number
-    switch (minAuth) {
-      case "public":
-        minAuth = 0;
-        break;
-      case "general employee":
-        minAuth = 1;
-        break;
-      case "locationAuthUser":
-        minAuth = 2;
-        break;
-      case "organizationAuthUser":
-        minAuth = 3;
-        break;
-      case "accountAdmin":
-        minAuth = 4;
-        break;
-      default:
-        console.log("not valid min Auth in UPV");
-        return new HttpError("unable to figure out min auth in UPV", 500);
+
+  getOrganizationAuth() {
+    return this.organizationAuthorizedUser;
+  }
+  getOrganizationAdmin() {
+    return this.organizationAuthorizedUser;
+  }
+  getLocations() {
+    return this.locations;
+  }
+  setLocationAuthorized(location) {
+    if (
+      //if authorized and not already in class
+      location.authorizedUsers.contains(this.user) &&
+      !this.locationsAuthorized.contains(location)
+    ) {
+      this.locationAuthorized.push(location);
     }
-    //checking users auth and if its above the min auth level
-    if (this.user === this.organization.accountAdmin && minAuth >= 4) {
-      return "accountAdmin";
-    } else if (
-      this.organization.authorizedUsers.includes(this.user) &&
-      minAuth >= 3
-    ) {
-      return "organizationAuthUser";
-    } else if (
-      this.location.authorizedUsers.includes(this.user) &&
-      minAuth >= 2
-    ) {
-      //eventually maybe go through each location in user list
-      return "locationAuthUser";
-    } else if (
-      this.user.organization === organization &&
-      this.location.activeStaff.includes(this.user) &&
-      this.location.organization === this.organization &&
-      minAuth >= 1
-    ) {
-      return "generalEmployee";
-    } else if (minAuth >= 0) {
-      return "public";
-    } //if user does not meet the min auth
-    else {
-      return new HttpError(
-        "You are not authorized to perform that action",
-        403
-      );
-    }
+  }
+  tokenExport() {
+    return {
+      user: this.user,
+      organization: this.organization,
+      locations: this.locations,
+      locationsAuthorized: this.locationsAuthorized,
+      organizationAdmin: this.organizationAdmin,
+      organizationAuthorizedUser: this.organizationAuthorizedUser,
+    };
+  }
+  tokenImport(tokenObject) {
+    this.user = tokenObject.user;
+    this.organization = tokenObject.organization;
+    this.locations = tokenObject.locations;
+    this.locationsAuthorized = tokenObject.locationsAuthorized;
+    this.organizationAdmin = tokenObject.organizationAdmin;
+    this.organizationAuthorizedUser = tokenObject.organizationAuthorizedUser;
   }
 }
 

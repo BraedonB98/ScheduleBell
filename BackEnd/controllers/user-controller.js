@@ -40,6 +40,24 @@ const login = async (req, res, next) => {
   if (!isValidPassword) {
     return next(new HttpError("Login Failed,invalid credentials", 401));
   }
+  //Locating Organization
+  let organization = await getUser(user.organization, "id");
+  //Checking if error when getting organization
+  if (organization instanceof HttpError) {
+    return next(organization);
+  }
+
+  upv = new userPermissionValidation(user, organization);
+
+  //checking if location upv check is needed
+  if (!upv.organizationAuth()) {
+    //not a organization wide admin
+    let locations = upv.getLocations();
+    locations = locations.map((location) => {
+      location = getLocation(location, "id");
+      upv.setLocationAuthorized(location);
+    });
+  }
   //JWT Token
   let token;
   try {
@@ -48,6 +66,7 @@ const login = async (req, res, next) => {
         id: user._id,
         email: user.email,
         name: user.name,
+        upv: upv.tokenExport(),
       },
       process.env.JWT_Key,
       { expiresIn: "2h" }
@@ -61,6 +80,7 @@ const login = async (req, res, next) => {
     );
   }
   const userRestricted = restrictUser(user, "actualUser");
+  userRestricted.token = token;
   res.json(userRestricted);
 };
 
