@@ -49,11 +49,11 @@ const login = async (req, res, next) => {
 
   upv = new userPermissionValidation(user, organization);
 
-  //checking if location upv check is needed
+  //if user is organization Auth they are authorized at ALL locations in organization
   if (!upv.organizationAuth()) {
-    //not a organization wide admin
     let locations = upv.getLocations();
     locations = locations.map((location) => {
+      //goes through each location use has listed and checks if user is authorized at that location
       location = getLocation(location, "id");
       upv.setLocationAuthorized(location);
     });
@@ -106,25 +106,20 @@ const addUser = async (req, res, next) => {
     const newError = user;
     return next(newError);
   }
-  //getting organization
-  let organization = getOrganization(user.organization, "oid");
-  if (organization instanceof HttpError) {
-    const newError = user;
-    return next(newError);
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
+  //only organization admins can add users to organization
+  if (!upv.getOrganizationAdmin()) {
+    new HttpError("You are not authorized to add users", 403);
   }
-
   //getting location
   let location = getLocation(primaryLocation, "locationNumber");
   if (location instanceof HttpError) {
     const newError = user;
     return next(newError);
   }
-  //checking requesters permission for location
-  let upv = new userPermissionValidation(user, location, organization);
-  upv = upv.newUser();
-  if (upv) {
-    return next(upv);
-  }
+
   //Checking if user already has account
   let newUser;
   try {
