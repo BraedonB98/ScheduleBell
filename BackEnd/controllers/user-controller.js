@@ -69,7 +69,7 @@ const login = async (req, res, next) => {
         upv: upv.tokenExport(),
       },
       process.env.JWT_Key,
-      { expiresIn: "2h" }
+      { expiresIn: "1h" }
     );
   } catch (error) {
     return next(
