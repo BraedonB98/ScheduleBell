@@ -12,9 +12,9 @@ const getOrganization = (identifier, searchType) => {
   const getOrganizationByName = async (name) => {};
 
   if (searchType === "id") {
-    return getUserById(identifier);
+    return getOrganizationById(identifier);
   } else if (searchType === "name") {
-    return getUserByName(identifier);
+    return getOrganizationByName(identifier);
   }
 };
 

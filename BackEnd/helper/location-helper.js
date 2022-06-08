@@ -12,9 +12,9 @@ const getLocation = (identifier, searchType) => {
   const getLocationByName = async (name) => {};
 
   if (searchType === "id") {
-    return getUserById(identifier);
+    return getLocationById(identifier);
   } else if (searchType === "name") {
-    return getUserByName(identifier);
+    return getLocationByName(identifier);
   }
 };
 
