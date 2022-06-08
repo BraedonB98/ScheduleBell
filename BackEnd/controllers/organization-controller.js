@@ -4,18 +4,15 @@ const mongoose = require("mongoose");
 //------------------Modules--------------------------
 const userHelper = require("../helper/user-helper");
 const organizationHelper = require("../helper/organization-helper");
-const locationHelper = require("../helper/location-helper");
 //------------------Models------------------------------
 const HttpError = require("../models/http-error");
 const Organization = require("../models/organization-model");
-const Location = require("../models/location-model");
 const User = require("../models/user-model");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;
 const getUser = userHelper.getUser;
 const getOrganization = organizationHelper.getOrganization;
-const getLocation = locationHelper.getLocation;
 
 //----------------------Controllers-------------------------
 const createOrganization = async (req, res, next) => {
