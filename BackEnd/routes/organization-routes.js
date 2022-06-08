@@ -26,6 +26,4 @@ router.get("/general/:oid", organizationController.getGeneral);
 
 router.get("/accountType/:oid", organizationController.getAccountType);
 
-router.get("/locations/:oid", organizationController.getLocations);
-
 module.exports = router;

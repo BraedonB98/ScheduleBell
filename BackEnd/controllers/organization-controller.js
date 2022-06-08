@@ -13,7 +13,6 @@ const User = require("../models/user-model");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;
-const restrictOrganization = organizationHelper.restrictOrganization;
 const getUser = userHelper.getUser;
 const getOrganization = organizationHelper.getOrganization;
 const getLocation = locationHelper.getLocation;
@@ -116,20 +115,34 @@ const editOrganizationGeneral = async (req, res, next) => {
     const newError = user;
     return next(newError);
   }
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
   //checking requesters permission for organization
-  let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.organizationPatch();
-  if (upv) {
-    return next(upv);
+  if (upv.getOrganizationAuth) {
+    return next(
+      new HttpError("Need permission to edit organization information", 403)
+    );
   }
 
-  //adding to organization (there is a more efficient way of doing this using ...?)
-  if (name) {
-    organization.name = name;
+  if (
+    organization.name === name &&
+    organizationColorScheme === organization.organizationColorScheme
+  ) {
+    return next(
+      new HttpError(
+        "Information provided is already set as organization information",
+        409
+      )
+    );
   }
-  if (organizationColorScheme) {
-    organization.name = name;
-  }
+
+  //editing organization if values provided
+  organization.name = name ? name : organization.name;
+  organization.organizationColorScheme = organizationColorScheme
+    ? organizationColorScheme
+    : organization.organizationColorScheme;
+
   //saving change
   try {
     await organization.save();
@@ -161,11 +174,12 @@ const addOrganizationAuthorizedUser = async (req, res, next) => {
     const newError = user;
     return next(newError);
   }
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
   //checking requesters permission for organization
-  let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.organizationPatch();
-  if (upv) {
-    return next(upv);
+  if (upv.getOrganizationAdmin) {
+    return next(new HttpError("Only Admin can add authorized Users", 403));
   }
   //getting new authorized user (make sure they exist)
   userAdding = await getUser(userAdding, "id");
@@ -209,10 +223,14 @@ const patchOrganizationImage = async (req, res, next) => {
     return next(newError);
   }
   //checking requesters permission for organization
-  let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.organizationPatch();
-  if (upv) {
-    return next(upv);
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
+  //checking requesters permission for organization
+  if (upv.getOrganizationAuth) {
+    return next(
+      new HttpError("Need permission to edit organization image", 403)
+    );
   }
 
   //adding to organization (there is a more efficient way of doing this using ...?)
@@ -247,13 +265,14 @@ const getOrganizationGeneral = async (req, res, next) => {
     const newError = user;
     return next(newError);
   }
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
   //checking requesters permission for organization
-  let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.getOrganization(); //will return what access level they have
-  if (upv instanceof HttpError) {
-    return next(upv);
+  organization = upv.restrictOrganization(organization); //restricts organization information based on user permissions or error if something isnt right
+  if (organization instanceof HttpError) {
+    return next(organization);
   }
-  organization = restrictOrganization(organization, upv); //restricts organization return data based on user permissions
   res.json(organization);
 };
 const getOrganizationAccountType = async (req, res, next) => {
@@ -270,15 +289,16 @@ const getOrganizationAccountType = async (req, res, next) => {
     const newError = user;
     return next(newError);
   }
+  //making object stored in token into class
+  let upv = new userPermissionValidation(user, user.organization);
+  upv.tokenImport(req.userData.upv);
   //checking requesters permission for organization
-  let upv = new userPermissionValidation(user, "", organization); //no location required
-  upv = upv.getOrganization(); //!add min auth
-  if (upv instanceof HttpError) {
-    return next(upv);
+  if (upv.getOrganizationAuth) {
+    return next(new HttpError("not authorized to get account type", 403));
   }
   res.json(organization.accountType);
 };
-const getOrganizationLocations = async (req, res, next) => {};
+
 //---------------------Exports------------------------------
 exports.create = createOrganization;
 exports.editGeneral = editOrganizationGeneral;
@@ -289,4 +309,3 @@ exports.patchImage = patchOrganizationImage;
 exports.delete = deleteOrganization;
 exports.getGeneral = getOrganizationGeneral;
 exports.getAccountType = getOrganizationAccountType;
-exports.getLocations = getOrganizationLocations;
