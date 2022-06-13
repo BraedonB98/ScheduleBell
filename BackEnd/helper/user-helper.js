@@ -133,8 +133,10 @@ const restrictUser = (user, restrictionLevel) => {
       payRate: user.payRate,
       availability: user.availability,
       id: user._id,
-      token: token,
     };
+    if (user.token) {
+      userRestricted.token = token;
+    }
   } else {
     userRestricted = {
       firstName: user.firstName,

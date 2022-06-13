@@ -1,5 +1,7 @@
 //--------------------imports-------------------------
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 //------------------Modules--------------------------
 const userHelper = require("../helper/user-helper");
@@ -41,7 +43,7 @@ const login = async (req, res, next) => {
     return next(new HttpError("Login Failed,invalid credentials", 401));
   }
   //Locating Organization
-  let organization = await getUser(user.organization, "id");
+  let organization = await getOrganization(user.organization, "id");
   //Checking if error when getting organization
   if (organization instanceof HttpError) {
     return next(organization);
@@ -50,13 +52,15 @@ const login = async (req, res, next) => {
   upv = new userPermissionValidation(user, organization);
 
   //if user is organization Auth they are authorized at ALL locations in organization
-  if (!upv.organizationAuth()) {
-    let locations = upv.getLocations();
-    locations = locations.map((location) => {
-      //goes through each location use has listed and checks if user is authorized at that location
-      location = getLocation(location, "id");
-      upv.setLocationAuthorized(location);
-    });
+  if (!upv.organizationAuth) {
+    let locations = upv.locations;
+    if (locations) {
+      locations = locations.map((location) => {
+        //goes through each location use has listed and checks if user is authorized at that location
+        location = getLocation(location, "id");
+        upv.setLocationAuthorized(location);
+      });
+    }
   }
   //JWT Token
   let token;
@@ -66,17 +70,15 @@ const login = async (req, res, next) => {
         id: user._id,
         email: user.email,
         name: user.name,
-        upv: upv.tokenExport(),
+        upv: upv.tokenExport,
       },
-      process.env.JWT_Key,
+      process.env.JWT_Key, //!its not able to locate process.env.JWT_Key, when hardcoded key it works("kaksjdfklasjdfklasjdklfjaskldfj")
       { expiresIn: "1h" }
     );
   } catch (error) {
+    console.log(error);
     return next(
-      new HttpError(
-        "Failed to make a secure connection, please try again later",
-        500
-      )
+      new HttpError("Failed to create token, please try again later", 500)
     );
   }
   const userRestricted = restrictUser(user, "actualUser");

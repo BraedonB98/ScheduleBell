@@ -1,6 +1,6 @@
 //--------------------imports-------------------------
 const mongoose = require("mongoose");
-
+const bcrypt = require("bcryptjs");
 //------------------Modules--------------------------
 const userHelper = require("../helper/user-helper");
 const organizationHelper = require("../helper/organization-helper");
@@ -35,9 +35,9 @@ const createOrganization = async (req, res, next) => {
   //Checking if user already has account
   let user;
   try {
-    user = await User.findOne({ email: email });
+    user = await User.findOne({ email: adminEmail });
     if (!user instanceof User) {
-      user = await User.findOne({ phoneNumber: phoneNumber });
+      user = await User.findOne({ phoneNumber: adminPhoneNumber });
     }
   } catch (error) {
     return next(
@@ -53,6 +53,7 @@ const createOrganization = async (req, res, next) => {
   try {
     hashedPassword = await bcrypt.hash(adminPassword, 12); //12 is the number of salting rounds(how secure)
   } catch (error) {
+    console.log(error);
     return next(new HttpError("Could not set password correctly", 500));
   }
   //creating organization creator
@@ -83,13 +84,13 @@ const createOrganization = async (req, res, next) => {
   });
 
   //adding organization to user now that organization exists
-  organizationCreator.organization = organization.id;
+  organizationCreator.organization = organization._id;
   //Sending new user to DB
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
-    organization.save({ session: sess });
-    organizationCreator.save({ session: sess });
+    await organization.save({ session: sess });
+    await organizationCreator.save({ session: sess });
     await sess.commitTransaction();
   } catch (error) {
     return next(new HttpError("Creating organization failed", 500));

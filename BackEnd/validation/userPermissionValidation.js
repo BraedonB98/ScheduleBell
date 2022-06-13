@@ -82,16 +82,16 @@ class userPermissionValidation {
     }
     return organizationRestricted;
   }
-  getOrganizationAuth() {
+  organizationAuth() {
     return this.organizationAuthorizedUser;
   }
-  getOrganizationAdmin() {
+  organizationAdmin() {
     return this.organizationAuthorizedUser;
   }
-  getLocations() {
+  locations() {
     return this.locations;
   }
-  getLocationsAuthorized() {
+  locationsAuthorized() {
     return this.locationsAuthorized;
   }
 
