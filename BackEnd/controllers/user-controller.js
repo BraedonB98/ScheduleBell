@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
         name: user.name,
         upv: upv.tokenExport,
       },
-      process.env.JWT_Key, //!its not able to locate process.env.JWT_Key, when hardcoded key it works("kaksjdfklasjdfklasjdklfjaskldfj")
+      process.env.JWT_Key,
       { expiresIn: "1h" }
     );
   } catch (error) {
