@@ -62,6 +62,8 @@ const login = async (req, res, next) => {
       });
     }
   }
+  console.log(process.env.Auth_Time_Out);
+
   //JWT Token
   let token;
   try {
@@ -73,7 +75,7 @@ const login = async (req, res, next) => {
         upv: upv.tokenExport,
       },
       process.env.JWT_Key,
-      { expiresIn: "1h" }
+      { expiresIn: process.env.Auth_Time_Out }
     );
   } catch (error) {
     console.log(error);
