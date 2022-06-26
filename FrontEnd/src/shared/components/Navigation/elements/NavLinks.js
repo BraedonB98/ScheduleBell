@@ -13,17 +13,25 @@ const NavLinks = (props) => {
     <ul className="nav-links">
       {!auth.isLoggedIn && <NavItem to="/" title={"Home"}></NavItem>}
       {!auth.isLoggedIn && <NavItem to="/auth" title={"Login"}></NavItem>}
-      {auth.isLoggedIn && <NavItem to="/" title={"DashBoard"}></NavItem>}
-      {auth.isLoggedIn && <NavItem to="/" title={"Schedule"}></NavItem>}
-      {auth.isLoggedIn && <NavItem to="/" title={"Staff"}></NavItem>}
-      {auth.isLoggedIn && <NavItem to="/" title={"Store"}></NavItem>}
+      {auth.isLoggedIn && (
+        <NavItem to="/dashboard" title={"DashBoard"}></NavItem>
+      )}
+
+      {auth.isLoggedIn && <NavItem to="/staff" title={"Staff"}></NavItem>}
+
+      {auth.isLoggedIn && <NavItem to="/schedule" title={"Schedule"}></NavItem>}
       {
-        auth.isLoggedIn && <NavItem to="/" title={"Sales"}></NavItem>
+        auth.isLoggedIn && <NavItem to="/sales" title={"Sales"}></NavItem>
         /*//!and is manager
          */
       }
+      {auth.isLoggedIn && (
+        <NavItem to="/locations" title={"Locations"}></NavItem>
+      )}
       {
-        auth.isLoggedIn && <NavItem to="/" title={"Organization"}></NavItem>
+        auth.isLoggedIn && (
+          <NavItem to="/organization" title={"Organization"}></NavItem>
+        )
         /*//!and is authOrg
          */
       }
