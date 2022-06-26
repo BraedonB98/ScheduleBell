@@ -13,7 +13,8 @@ const locationSchema = new Schema({
     coordinates: { type: String },
   },
   notes: { type: String },
-  activeStaff: { type: mongoose.Types.ObjectId, ref: "User" },
+  activeStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  altStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   archivedStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" }, //1 months schedule
   archivedSchedule: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }],

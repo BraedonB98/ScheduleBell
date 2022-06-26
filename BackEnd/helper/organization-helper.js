@@ -10,14 +10,14 @@ const Organization = require("../models/organization-model");
 const getOrganization = (identifier, searchType) => {
   const getOrganizationById = async (oid) => {
     let organization;
-    if (uid === null) {
-      return new HttpError("no uid provided", 400);
+    if (oid === null) {
+      return new HttpError("no oid provided", 400);
     }
-    if (typeof uid === "string") {
-      uid = new mongoose.ObjectID(uid);
+    if (typeof oid === "string") {
+      oid = new mongoose.ObjectID(oid);
     }
     try {
-      organization = await Organization.findById(uid);
+      organization = await Organization.findById(oid);
     } catch (error) {
       return new HttpError("Could not access organization in database", 500);
     }
