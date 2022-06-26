@@ -14,6 +14,19 @@ const NavLinks = (props) => {
       {!auth.isLoggedIn && <NavItem to="/" title={"Home"}></NavItem>}
       {!auth.isLoggedIn && <NavItem to="/auth" title={"Login"}></NavItem>}
       {auth.isLoggedIn && <NavItem to="/" title={"DashBoard"}></NavItem>}
+      {auth.isLoggedIn && <NavItem to="/" title={"Schedule"}></NavItem>}
+      {auth.isLoggedIn && <NavItem to="/" title={"Staff"}></NavItem>}
+      {auth.isLoggedIn && <NavItem to="/" title={"Store"}></NavItem>}
+      {
+        auth.isLoggedIn && <NavItem to="/" title={"Sales"}></NavItem>
+        /*//!and is manager
+         */
+      }
+      {
+        auth.isLoggedIn && <NavItem to="/" title={"Organization"}></NavItem>
+        /*//!and is authOrg
+         */
+      }
 
       {auth.isLoggedIn &&
         props.userDropDown && ( //props.userDropDown indicates user in desktop mode and no side drawer available

@@ -16,7 +16,7 @@ const userSchema = new Schema({
   primaryLocation: { type: mongoose.Types.ObjectId, ref: "Location" },
   alternateLocations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
   payRate: { type: String },
-  availability: [{ type: String }],
+  availability: [{ type: String }], //eventually maybe make this a schedule like object where the user can have different availability for each month
   updateProperties: [{ type: String }],
 });
 

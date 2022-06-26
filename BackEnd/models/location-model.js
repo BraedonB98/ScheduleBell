@@ -15,7 +15,7 @@ const locationSchema = new Schema({
   notes: { type: String },
   activeStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   altStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-  archivedStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  archivedStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }], // Maybe make this an object that has includes user object, type of staff, and termination reason.
   schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" }, //1 months schedule
   archivedSchedule: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }],
 });
