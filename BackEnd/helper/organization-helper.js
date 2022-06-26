@@ -8,8 +8,39 @@ const Organization = require("../models/organization-model");
 //getOrganization takes in an identifier and searchType and returns Organization if in the database
 
 const getOrganization = (identifier, searchType) => {
-  const getOrganizationById = async (oid) => {};
-  const getOrganizationByName = async (name) => {};
+  const getOrganizationById = async (oid) => {
+    let organization;
+    if (uid === null) {
+      return new HttpError("no uid provided", 400);
+    }
+    if (typeof uid === "string") {
+      uid = new mongoose.ObjectID(uid);
+    }
+    try {
+      organization = await Organization.findById(uid);
+    } catch (error) {
+      return new HttpError("Could not access organization in database", 500);
+    }
+    if (!organization) {
+      return new HttpError("Organization not in database", 404);
+    }
+    return organization;
+  };
+  const getOrganizationByName = async (name) => {
+    let organization;
+    if (name === null) {
+      return new HttpError("no organization name provided", 400);
+    }
+    try {
+      organization = await Organization.findOne({ name: name });
+    } catch (error) {
+      return new HttpError("Could not access organization in database", 500);
+    }
+    if (!organization) {
+      return new HttpError(`${name} (Organization) not in database`, 404);
+    }
+    return organization;
+  };
 
   if (searchType === "id") {
     return getOrganizationById(identifier);

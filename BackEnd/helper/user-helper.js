@@ -29,8 +29,7 @@ const getUser = (identifier, searchType) => {
       return new HttpError("no uid provided", 400);
     }
     if (typeof uid === "string") {
-      //!var ObjectID = require("mongodb").ObjectID;
-      uid = new mongoose.ObjectID(uid); //!no mongoose.
+      uid = new mongoose.ObjectID(uid);
     }
     try {
       user = await User.findById(uid);
