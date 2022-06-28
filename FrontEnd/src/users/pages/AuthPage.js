@@ -49,6 +49,7 @@ const AuthPage = () => {
       "303-902-0129",
       "Braedon Bellamy"
     );
+    navigate("/");
     //! Uncomment this and hook to backend
     // try {
     //   const responseData = await sendRequest(

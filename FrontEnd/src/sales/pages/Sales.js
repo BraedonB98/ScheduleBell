@@ -1,3 +1,5 @@
 import React, { useContext } from "react";
-const Sales = () => {};
+const Sales = () => {
+  return <h1>Sales</h1>;
+};
 export default Sales;

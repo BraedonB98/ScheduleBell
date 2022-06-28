@@ -13,9 +13,7 @@ const NavLinks = (props) => {
     <ul className="nav-links">
       {!auth.isLoggedIn && <NavItem to="/" title={"Home"}></NavItem>}
       {!auth.isLoggedIn && <NavItem to="/auth" title={"Login"}></NavItem>}
-      {auth.isLoggedIn && (
-        <NavItem to="/dashboard" title={"DashBoard"}></NavItem>
-      )}
+      {auth.isLoggedIn && <NavItem to="/" title={"DashBoard"}></NavItem>}
 
       {auth.isLoggedIn && <NavItem to="/staff" title={"Staff"}></NavItem>}
 
@@ -26,7 +24,7 @@ const NavLinks = (props) => {
          */
       }
       {auth.isLoggedIn && (
-        <NavItem to="/locations" title={"Locations"}></NavItem>
+        <NavItem to="/location" title={"Locations"}></NavItem>
       )}
       {
         auth.isLoggedIn && (
