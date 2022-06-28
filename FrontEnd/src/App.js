@@ -19,9 +19,18 @@ import "./App.css";
 
 //Pages
 import HomePage from "./landing/pages/Homepage";
-
+import Dashboard from "./landing/pages/Dashboard";
 //// Styling for importing pages after "landing page" finishes loading
 const AuthPage = React.lazy(() => import("./users/pages/AuthPage"));
+const PageNotFound = React.lazy(() => import("./shared/pages/PageNotFound"));
+
+const Staff = React.lazy(() => import("./staff/pages/Staff"));
+const Schedule = React.lazy(() => import("./schedule/pages/Schedule"));
+const Sales = React.lazy(() => import("./sales/pages/Sales"));
+const Location = React.lazy(() => import("./location/pages/Location"));
+const Organization = React.lazy(() =>
+  import("./organization/pages/Organization")
+);
 
 //*---Content---*//
 
@@ -45,8 +54,13 @@ function App() {
     //Logged In Routes
     routes = (
       <Routes>
-        {/* <Route path="/pageURL" exact element={<Page />} />
-        <Route path="/" exact element={<Default />} /> */}
+        <Route path="/organization" exact element={<Organization />} />
+        <Route path="/location" exact element={<Location />} />
+        <Route path="/sales" exact element={<Sales />} />
+        <Route path="/schedule" exact element={<Schedule />} />
+        <Route path="/staff" exact element={<Staff />} />
+        <Route path="/" exact element={<Dashboard />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   } else {
@@ -54,7 +68,8 @@ function App() {
     routes = (
       <Routes>
         <Route path="/auth" exact element={<AuthPage />} />
-        <Route path="*" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   }
