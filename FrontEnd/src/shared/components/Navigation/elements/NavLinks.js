@@ -2,12 +2,10 @@ import React, { useContext, useState } from "react";
 import NavItem from "./NavItem";
 import UserDropDown from "./UserDropDown";
 import { AuthContext } from "../../../context/auth-context";
-import { useNavigate } from "react-router-dom";
 
 import "../styling/NavLinks.css";
 
 const NavLinks = (props) => {
-  const navigate = useNavigate();
   const auth = useContext(AuthContext); //eslint-disable-next-line
   return (
     <ul className="nav-links">
