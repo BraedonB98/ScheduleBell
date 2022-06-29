@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import NavItem from "./NavItem";
 import UserDropDown from "./UserDropDown";
+import Header from "./Header";
 import { AuthContext } from "../../../context/auth-context";
 
 import "../styling/NavLinks.css";
@@ -22,7 +23,9 @@ const NavLinks = (props) => {
          */
       }
       {auth.isLoggedIn && (
-        <NavItem to="/location" title={"Locations"}></NavItem>
+        <NavItem to="/location" title={"Locations"}>
+          <header className="sub-header"></header>
+        </NavItem>
       )}
       {
         auth.isLoggedIn && (

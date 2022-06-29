@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import MainHeader from "./MainHeader";
+import Header from "./Header";
 import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import Backdrop from "../../UIElements/other/elements/Backdrop";
@@ -27,7 +27,7 @@ const MainNavigation = (props) => {
           <NavLinks />
         </nav>
       </SideDrawer>
-      <MainHeader>
+      <Header className="main-header">
         <button
           className="main-navigation__menu-btn"
           onClick={openDrawerHandler}
@@ -49,7 +49,7 @@ const MainNavigation = (props) => {
         <nav className="main-navigation__header-nav">
           <NavLinks userDropDown={!drawerIsOpen} />
         </nav>
-      </MainHeader>
+      </Header>
     </React.Fragment>
   );
 };
