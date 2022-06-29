@@ -6,7 +6,15 @@ import "../styling/NavItem.css";
 const NavItem = (props) => {
   return (
     <li className={props.to ? "" : "Nav-Item"}>
-      {props.to && <NavLink to={props.to}>{props.title}</NavLink>}
+      {props.to && (
+        <NavLink to={props.to}>
+          {({ isActive }) =>
+            isActive
+              ? props.title + (props.children ? props.children : "")
+              : props.title
+          }
+        </NavLink>
+      )}
       {!props.to && (
         <React.Fragment>
           <div
