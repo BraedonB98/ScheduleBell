@@ -6,7 +6,9 @@
   background-color: var(--colorSecondaryVariant);
   padding: 1rem;
   overflow: hidden;
+  z-index: 6;
 }
+
 .drop-down-menu__item {
   height: 50px;
   display: flex;

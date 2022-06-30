@@ -67,9 +67,8 @@ function App() {
     //Default Routes
     routes = (
       <Routes>
-        <Route path="/auth" exact element={<AuthPage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<PageNotFound />} />
+        <Route path="/" exact element={<HomePage />} />
+        <Route path="*" element={<AuthPage />} />
       </Routes>
     );
   }

@@ -24,7 +24,17 @@ const NavLinks = (props) => {
       }
       {auth.isLoggedIn && (
         <NavItem to="/location" title={"Locations"}>
-          <header className="sub-header"></header>
+          <Header className="sub-header">
+            <ul className="nav-links__sub-menu">
+              <NavItem to="/location/view" title={"View"}></NavItem>
+              <NavItem to="/location/edit" title={"Edit"}></NavItem>
+            </ul>
+            {/*
+            //!Put in an item that shows users currently selected store(one they are working within) 
+            //!and if they have permissions at multiple locations make it a drop down to search for a different
+            //!location by location number
+            */}
+          </Header>
         </NavItem>
       )}
       {
@@ -38,11 +48,15 @@ const NavLinks = (props) => {
       {auth.isLoggedIn &&
         props.userDropDown && ( //props.userDropDown indicates user in desktop mode and no side drawer available
           <UserDropDown />
+          /*//!USE CSS TO MAKE IT APPEAR WHEN HOVERED OVER AND DISAPPEAR WHEN NOT HOVERED OVER
+           */
         )}
       {auth.isLoggedIn && !props.userDropDown && (
         <React.Fragment>
-          <NavItem to="/userpreferences" title={"Settings"}></NavItem>
-          <button onClick={auth.logout}>LOGOUT</button>
+          <NavItem to="/user-preferences" title={"Settings"}></NavItem>
+          <NavItem to="/" onClick={auth.logout}>
+            LOGOUT
+          </NavItem>
         </React.Fragment>
       )}
     </ul>
