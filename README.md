@@ -8,3 +8,5 @@ Design Decisions to note
 - BACKEND
   -Permissions checking:
   for authorization checks for things like creating newUser I could have used a middleware function and included it above the routes that require a higher level of authorization, However due to the amount of different checks ran on each request, I felt like it was better to have a helper function, this prevents having to access database to get user, location, organization, and extra information depending on request before continuing to function. also allows for more specific tailoring to each type of request so you don't check schedules if you're not adding a schedule
+
+  Logo Color Hex #24478f

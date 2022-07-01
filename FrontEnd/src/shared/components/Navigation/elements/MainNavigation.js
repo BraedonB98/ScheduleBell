@@ -42,7 +42,7 @@ const MainNavigation = (props) => {
             <img
               className="main-navigation__logo-image"
               src={logo}
-              alt="App Logo"
+              alt="Schedule Bell Logo"
             />
           </Link>
         </h1>
