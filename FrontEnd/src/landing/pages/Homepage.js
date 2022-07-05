@@ -5,6 +5,7 @@ import React from "react";
 
 //Components
 import FeatureDisplay from "../components/homepage/FeatureDisplay";
+import Headline from "../components/homepage/Headline";
 //Styling
 import "./styling/Homepage.css";
 
@@ -13,8 +14,13 @@ import "./styling/Homepage.css";
 const Homepage = () => {
   return (
     <React.Fragment>
-      <h1>Schedule Bell</h1>
-      <p>Reinventing Small Business Scheduling</p>
+      <Headline
+        demo="./images/Headline.jpg"
+        demoAlt="Store Shop Front"
+        title="Schedule Bell"
+        subtitle="Reinventing Small Business Scheduling"
+      />
+
       <FeatureDisplay
         demo={`./images/Team.jpg`}
         demoAlt="Group of people working as a team"

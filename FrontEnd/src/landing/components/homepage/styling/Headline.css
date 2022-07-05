@@ -1,0 +1,41 @@
+.Headline {
+    width: 100%;
+    height: 20rem;
+    padding: 0;
+    display:flex;
+    justify-content: center;
+  }
+  .Headline__Content{
+    display: flex;
+    margin:0.25rem;
+    margin-right:1rem;
+    margin-left:1rem;
+    width:50%;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.Headline__Title{
+    text-align: center;
+    
+    padding: 0;
+    margin:0;
+    
+}
+
+.Headline__Subtitle{
+    text-align: center;
+    
+}
+
+  .Headline__Demonstrative{
+   
+    overflow: hidden;
+    width:100%
+}
+
+.Headline__Demo-Img{
+  width: auto;
+  height: 100%;
+}
