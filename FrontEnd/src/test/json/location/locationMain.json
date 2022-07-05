@@ -1,0 +1,17 @@
+{
+    "name":"Main Location" ,
+    "organization":"/FrontEnd/src/test/json/organization/organization.json" ,
+    "authorizedUsers":["/FrontEnd/src/test/json/user/userAuthLocation.json"],
+    "locationNumber":"001",
+    "imageUrl":"/FrontEnd/src/test/images/Test.png",
+    "location":{
+      "address":"2468 S Marion St, Denver CO 80210",
+      "coordinates":[39.6718628, -104.97201889991315]
+    },
+    "notes":"Congrats you have reached the main location!!! Good progress!!!",
+    "activeStaff":["/FrontEnd/src/test/json/user/userAuth0.json","/FrontEnd/src/test/json/user/userAuthLocation.json"],
+    "altStaff":[],
+    "archivedStaff":[],
+    "schedule":"/FrontEnd/src/test/json/schedule/mainSchedule.json" ,
+    "archivedSchedule":"/FrontEnd/src/test/json/schedule/mainArchivedSchedule.json"
+  }
