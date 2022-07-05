@@ -1,0 +1,26 @@
+{
+  "name":"ScheduleBell Test",
+  "accountAdmin":"/FrontEnd/test/json/user/userAuthOrg.json",
+  "authorizedUsers":"/FrontEnd/test/json/user/userAuthOrg.json",
+  "imageUrl":"/FrontEnd/test/images/Test.png",
+  "accountType":"Dev" ,
+  "notes":"This is a dummy test organization if you see this and you are not a developer, PLEASE contact your scheduleBell representative",
+  "locations":["/FrontEnd/test/json/location/locationMain.json","/FrontEnd/test/json/location/locationAlt.json"],
+  "organizationColorScheme":{
+    "colorPrimary":" #c8b7a6",
+    "colorPrimaryVariant":" #00adb5",
+    "colorSecondary":" #7d94b5",
+    "colorSecondaryVariant":" #c29591",
+    "colorBackground":" #393e46",
+    "colorSurface":" #d5bfbf",
+    "colorError":" red",
+    "colorOnImages":" #703f37",
+    "colorOnPrimary":" #703f37",
+    "colorOnSecondary":" #393e46",
+    "colorOnPrimaryVariant":" #703f37",
+    "colorOnSecondaryVariant":" #703f37",
+    "colorOnBackground":" #703f37",
+    "colorOnSurface":" #703f37",
+    "colorOnError":" #703f37"
+  }
+}
