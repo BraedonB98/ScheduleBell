@@ -1,0 +1,17 @@
+{
+    "name":"Alt Location" ,
+    "organization":"/FrontEnd/test/json/organization/organization.json" ,
+    "authorizedUsers": [],
+    "locationNumber":"001",
+    "imageUrl":"/FrontEnd/test/images/Test.png",
+    "location":{
+      "address":"2468 S Marion St, Denver CO 80210",
+      "coordinates":[39.6718628, -104.97201889991315]
+    },
+    "notes":"Congrats you have reached the alt location!!! impressive!!! Are you working on organziation material?",
+    "activeStaff":[],
+    "altStaff":[],
+    "archivedStaff":[],
+    "schedule":"" ,
+    "archivedSchedule":""
+  }

@@ -10,14 +10,14 @@ const locationSchema = new Schema({
   imageUrl: { type: String },
   location: {
     address: { type: String },
-    coordinates: { type: String },
+    coordinates: [{ type: Number }],
   },
   notes: { type: String },
   activeStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   altStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   archivedStaff: [{ type: mongoose.Types.ObjectId, ref: "User" }], // Maybe make this an object that has includes user object, type of staff, and termination reason.
-  schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" }, //1 months schedule
-  archivedSchedule: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }],
+  schedule: { type: mongoose.Types.ObjectId, ref: "Schedule" }, //First of this month onward
+  archivedSchedule: [{ type: mongoose.Types.ObjectId, ref: "Schedule" }], //Previous month and backward. I could set a max
 });
 
 module.exports = mongoose.model("Location", locationSchema);

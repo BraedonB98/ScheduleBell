@@ -13,7 +13,7 @@ const scheduleSchema = new Schema({
   status: { type: String }, //pending, active, archived
   calendar: [
     {
-      day: { type: Date },
+      date: { type: Date },
       sales: { type: String }, //eventually add ability to predict future sales
       customerExperience: { type: String }, //out of 5 to allow to algo to predict if sales go up or down
       notes: { type: String }, //add any special holidays (may effect scheduling)

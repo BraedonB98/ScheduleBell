@@ -18,7 +18,7 @@ const userSchema = new Schema({
   payRate: { type: String },
   availability: [
     {
-      date: { type: Date }, //sorted in order
+      date: { type: Date }, //sorted in order //!if more than a month old delete to save room
       time: [
         {
           start: { type: Number },
