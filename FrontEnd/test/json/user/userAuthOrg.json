@@ -1,0 +1,37 @@
+{
+    "firstName": "Braedon",
+    "lastName": "Bellamy",
+    "preferredName":"Braedon B.",
+    "employeeNumber":"882",
+    "position":"Sr Dev",
+    "imageUrl":"/FrontEnd/test/images/BraedonBUserTestImage.jpg",
+    "email":"Braedonb98@gmail.com",
+    "phoneNumber":"13039020129",
+    "password":"password",
+    "organization":"/FrontEnd/test/json/organization/organization.json",
+    "primaryLocation":"/FrontEnd/test/json//location/locationMain.json",
+    "alternateLocations":"/FrontEnd/test/json/location/locationAlt.json",
+    "payRate":"160",
+    "availability":[{
+      "date":"2022-07-20T0:0:0.000Z",
+        "time": [{
+          "start": 900,
+          "end": 2200
+        }]
+    },
+    {
+      "date":"2022-07-21T0:0:0.000Z",
+        "time": [{
+          "start": 900,
+          "end": 1300
+        },
+        {
+          "start": 1500,
+          "end": 2200
+        }
+      ]
+    }
+  ], 
+    "updateProperties":[],
+    "notifications":["Welcome to schedule bell test, We are happy to have you!!!"]
+  }
