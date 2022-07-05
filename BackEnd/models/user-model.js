@@ -16,8 +16,19 @@ const userSchema = new Schema({
   primaryLocation: { type: mongoose.Types.ObjectId, ref: "Location" },
   alternateLocations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
   payRate: { type: String },
-  availability: [{ type: String }], //eventually maybe make this a schedule like object where the user can have different availability for each month
+  availability: [
+    {
+      date: { type: Date }, //sorted in order
+      time: [
+        {
+          start: { type: Number },
+          end: { type: Number },
+        },
+      ],
+    },
+  ],
   updateProperties: [{ type: String }],
+  notifications: [{ type: String }],
 });
 
 module.exports = mongoose.model("User", userSchema);
