@@ -39,7 +39,7 @@ const UserDropDown = (props) => {
           <DropDownItem onClick={logoutHandler}>Logout</DropDownItem>
         </DropDownMenu>
       )}
-      {/*//! remove &nbsp; and fix with css
+     {/*//! remove &nbsp; and fix with css 
        */}
       <h1>&nbsp;&nbsp;&nbsp;&nbsp;</h1>
     </NavItem>
