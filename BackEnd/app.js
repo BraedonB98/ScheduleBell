@@ -42,12 +42,16 @@ app.use((req, res, next) => {
 });
 
 //------------------Mongo------------------------
+console.log(
+  `Connecting to ${process.env.MongoDB_Server} as ${process.env.MongoDB_User}. Using ${process.env.MongoDB_DBName}`
+);
 mongoose
   .connect(
     `mongodb+srv://${process.env.MongoDB_User}:${process.env.MongoDB_Password}@${process.env.MongoDB_Server}/${process.env.MongoDB_DBName}?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(process.env.PORT || 5000);
+    console.log("Database connection established!");
   })
   .catch((error) => {
     console.log("Fail to connect to DB");
