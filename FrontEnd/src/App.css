@@ -1,21 +1,21 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap");
 
 :root{
-  --colorPrimary: #c8b7a6;
-  --colorPrimaryVariant: #00adb5;
-  --colorSecondary: #7d94b5; /* Cards Buttons */
-  --colorSecondaryVariant: #c29591; /* Nav Bar, Modal Header*/
-  --colorBackground: #393e46; /*Page Background*/
-  --colorSurface: #d5bfbf;
-  --colorError: red;
-  --colorOnImages: #703f37;
-  --colorOnPrimary: #703f37;
-  --colorOnSecondary: #393e46;
-  --colorOnPrimaryVariant: #703f37;
-  --colorOnSecondaryVariant: #703f37;
-  --colorOnBackground: #703f37;
-  --colorOnSurface: #703f37;
-  --colorOnError: #703f37;
+  --colorPrimary: #03045E;
+  --colorPrimaryVariant: #00B4D8;/* Cards */
+  --colorSecondary: #0077B6; /* Buttons */
+  --colorSecondaryVariant: #48CAE4; /* Nav Bar, Modal Header*/
+  --colorBackground: #caf0f8; /*Page Background*/
+  --colorSurface: #CAF0F8;
+  --colorError: #FCA311;
+  --colorOnImages: #14213D;
+  --colorOnPrimary: #E5E5E5;
+  --colorOnSecondary: #FFFFFF;
+  --colorOnPrimaryVariant: #FFFFFF;
+  --colorOnSecondaryVariant: #14213D;
+  --colorOnBackground: #14213D;
+  --colorOnSurface: #14213D;
+  --colorOnError: #FFFFFF;
 
   --fontFamily : "Open Sans", sans-serif;
   --navHeight: 4rem;

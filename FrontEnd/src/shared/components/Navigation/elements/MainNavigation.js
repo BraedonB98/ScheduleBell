@@ -6,7 +6,7 @@ import NavLinks from "./NavLinks";
 import SideDrawer from "./SideDrawer";
 import Backdrop from "../../UIElements/other/elements/Backdrop";
 import "../styling/MainNavigation.css";
-import logo from "../../../../logo.svg";
+import logo from "../../../icons/ScheduleBellLogo.svg";
 
 const MainNavigation = (props) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);

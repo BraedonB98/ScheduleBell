@@ -6,7 +6,7 @@ const Headline = (props) => {
   return (
     <div className="Headline">
       <div className="Headline__Content">
-        <h1 className="Headline__Title">"{props.title}"</h1>
+        <h1 className="Headline__Title">{props.title}</h1>
         <p className="Headline__Subtitle">{props.subtitle}</p>
       </div>
       <div className="Headline__Demonstrative">
