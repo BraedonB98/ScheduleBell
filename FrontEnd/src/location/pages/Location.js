@@ -1,5 +1,11 @@
 import React, { useContext } from "react";
+import LocationSubNav from "../components/navigation/LocationSubNav";
 const Location = () => {
-  return <h1>Locations</h1>;
+  return (
+    <React.Fragment>
+      <LocationSubNav></LocationSubNav>
+      <h1>Locations</h1>
+    </React.Fragment>
+  );
 };
 export default Location;
