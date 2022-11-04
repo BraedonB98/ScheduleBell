@@ -54,11 +54,11 @@ function App() {
     //Logged In Routes
     routes = (
       <Routes>
-        <Route path="/organization" exact element={<Organization />} />
-        <Route path="/location" exact element={<Location />} />
-        <Route path="/sales" exact element={<Sales />} />
-        <Route path="/schedule" exact element={<Schedule />} />
-        <Route path="/staff" exact element={<Staff />} />
+        <Route path="/organization/*" element={<Organization />} />
+        <Route path="/location/*" element={<Location />} />
+        <Route path="/sales/*" element={<Sales />} />
+        <Route path="/schedule/*" element={<Schedule />} />
+        <Route path="/staff/*" element={<Staff />} />
         <Route path="/" exact element={<Dashboard />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
