@@ -10,7 +10,7 @@ router.post("/login", userController.login);
 
 router.use(checkAuth); // every route after this requires an token
 
-router.post("/createUser", userController.addUser); //!need to changed to create user
+router.post("/createUser", userController.createUser); //!need to changed to create user
 
 router.patch("/general", userController.general); //fn, ln, pn, jc, imageurl, email, phoneNumber
 
