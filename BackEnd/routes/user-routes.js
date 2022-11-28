@@ -10,25 +10,21 @@ router.post("/login", userController.login);
 
 router.use(checkAuth); // every route after this requires an token
 
-router.post("/addUser", userController.addUser); //Will create a "user" based on username, will set password to LastName, FirstName, no spaces until they sign in the first time
+router.post("/createUser", userController.addUser); //!need to changed to create user
 
 router.patch("/general", userController.general); //fn, ln, pn, jc, imageurl, email, phoneNumber
 
-router.patch("/transferLocation", userController.transferPrimaryLocation);
+router.post("/position", userController.addPosition);
 
-router.patch("/jobCode", userController.editJobCode);
+router.patch("/position", userController.editPosition);
 
-router.patch("/payRate", userController.editPayRate);
+router.delete("/position", userController.removePosition);
 
 router.patch("/availability", userController.editAvailability);
 
-router.delete("/altLocation", userController.removeAltLocation);
-
 router.get("/general", userController.getGeneral); //fn, ln, pn, jc, imageurl, email, phoneNumber, primaryLocation
 
-router.get("/locations", userController.getLocations); //primary followed by alt
-
-router.get("/payRate", userController.getPayRate);
+router.get("/positions", userController.getPositions); //in order of priority
 
 router.get("/availability", userController.getAvailability);
 

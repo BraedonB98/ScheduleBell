@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
   res.json(userRestricted);
 };
 
-const addUser = async (req, res, next) => {
+const createUser = async (req, res, next) => {
   const {
     firstName,
     lastName,

@@ -3,20 +3,20 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  //User Information
   firstName: { type: String },
   lastName: { type: String },
   preferredName: { type: String },
-  employeeNumber: { type: String },
-  position: { type: String },
-  imageUrl: { type: String },
-  email: { type: String },
-  phoneNumber: { type: String },
   password: { type: String },
-  organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
-  primaryLocation: { type: mongoose.Types.ObjectId, ref: "Location" },
-  alternateLocations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
-  payRate: { type: String },
+  phoneNumber: { type: String },
+  email: { type: String },
+  biography: { type: String },
+  imageUrl: { type: String },
+  //Current Job Information
+  positions: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+  //Scheduling (maybe later make this position specific)
   availability: [
+    //!consider making this a model that is shared with schedule
     {
       date: { type: Date }, //sorted in order //!if more than a month old delete to save room
       time: [
@@ -27,6 +27,7 @@ const userSchema = new Schema({
       ],
     },
   ],
+  //System Settings/Flags
   updateProperties: [{ type: String }],
   notifications: [{ type: String }],
 });
