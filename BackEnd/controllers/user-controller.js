@@ -185,7 +185,7 @@ const createUser = async (req, res, next) => {
   const userRestricted = restrictUser(createdUser, "primaryLocationManager");
   res.json(userRestricted);
 };
-const general = async (req, res, next) => {};
+const editGeneral = async (req, res, next) => {};
 const addPosition = async (req, res, next) => {};
 const editPosition = async (req, res, next) => {};
 const removePosition = async (req, res, next) => {};
@@ -197,7 +197,7 @@ const getAvailability = async (req, res, next) => {};
 //---------------------Exports------------------------------
 exports.login = login;
 exports.createUser = createUser;
-exports.general = general;
+exports.editGeneral = editGeneral;
 exports.addPosition = addPosition;
 exports.editPosition = editPosition;
 exports.removePosition = removePosition;
