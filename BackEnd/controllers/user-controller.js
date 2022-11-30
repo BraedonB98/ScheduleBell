@@ -10,7 +10,7 @@ const locationHelper = require("../helper/location-helper");
 //------------------Models/Classes------------------------------
 const HttpError = require("../models/http-error");
 const User = require("../models/user-model");
-const userPermissionValidation = require("../validation/userPermissionValidation");
+const userPermissionValidation = require("../shared/authorization/userPermissionValidation");
 
 //-----------------HelperFunctions------------------
 const restrictUser = userHelper.restrictUser;

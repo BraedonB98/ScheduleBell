@@ -1,7 +1,7 @@
 //--------------------Imports-----------------
-const HttpError = require("../models/http-error");
-const Organization = require("../models/organization-model");
-const User = require("../models/user-model");
+const HttpError = require("../../models/http-error");
+const Organization = require("../../models/organization-model");
+const User = require("../../models/user-model");
 //------------------Class--------------------
 class userPermissionValidation {
   user;

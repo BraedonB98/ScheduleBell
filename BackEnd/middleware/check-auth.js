@@ -1,5 +1,5 @@
 const HttpError = require("../models/http-error");
-const userPermissionValidation = require("../validation/userPermissionValidation");
+const userPermissionValidation = require("../shared/authorization/userPermissionValidation");
 const jwt = require("jsonwebtoken");
 module.exports = (req, res, next) => {
   if (req.method === "OPTIONS") {
