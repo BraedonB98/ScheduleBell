@@ -8,7 +8,7 @@ const organizationSchema = new Schema({
   accountAdmin: { type: mongoose.Types.ObjectId, ref: "User" },
   authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   imageUrl: { type: String },
-  accountType: { type: String }, //Trial, (then subscription options), DevApproved(free but full feature)
+  subscription: { type: String }, //Trial, (then subscription options), DevApproved(free but full feature)
   notes: { type: String },
   locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
   organizationColorScheme: { type: mongoose.Types.ObjectId, ref: "Color" },
