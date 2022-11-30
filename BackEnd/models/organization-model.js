@@ -5,8 +5,17 @@ const Schema = mongoose.Schema;
 const organizationSchema = new Schema({
   name: { type: String },
   purposeStatement: { type: String },
-  accountAdmin: { type: mongoose.Types.ObjectId, ref: "User" },
-  authorizedUsers: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  authCodes: {
+    //position permissions
+    master: [{ type: String }], //all rights
+    imgaeUrl: [{ type: String }],
+    colorScheme: [{ type: String }],
+    subscription: [{ type: String }],
+    purposeStatement: [{ type: String }],
+    locations: [{ type: String }], //will have auth for all location changes(ie each store all auth)
+    auth: [{ type: String }],
+    delete: [{ type: String }], //should set a delay request to allow for manual cancel of deletion(rogue employee)
+  }, //(also required to be assigned to organization)
   imageUrl: { type: String },
   subscription: { type: String }, //Trial, (then subscription options), DevApproved(free but full feature)
   notes: { type: String },

@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 
 const positionSchema = new Schema({
   organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
+  department: { type: String },
   title: { type: String },
+  authCode: { type: String }, //number to assign to auth level
   priority: { type: String }, //primary location/position = 0
   employeeNumber: { type: String },
   payRate: { type: String },

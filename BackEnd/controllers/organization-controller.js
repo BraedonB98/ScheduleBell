@@ -157,7 +157,7 @@ const editOrganizationGeneral = async (req, res, next) => {
 const editOrganizationAccountType = async (req, res, next) => {
   //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
 };
-const addOrganizationAuthorizedUser = async (req, res, next) => {
+const editAuth = async (req, res, next) => {
   const { userAdding } = req.body;
   const uid = req.userData.id;
   //getting requesting user
@@ -301,7 +301,7 @@ const getOrganizationAccountType = async (req, res, next) => {
 exports.create = createOrganization;
 exports.editGeneral = editOrganizationGeneral;
 exports.editAccountType = editOrganizationAccountType;
-exports.addAuthorizedUser = addOrganizationAuthorizedUser;
+exports.editAuth = editAuth;
 exports.removeAuthorizedUser = removeOrganizationAuthorizedUser;
 exports.patchImage = patchOrganizationImage;
 exports.delete = deleteOrganization;

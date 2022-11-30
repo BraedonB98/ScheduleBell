@@ -8,11 +8,11 @@ const locationSchema = new Schema({
   organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
   auth: {
     //position permissions
-    master: [{ type: mongoose.Types.ObjectId, ref: "Position" }], //all rights
-    pushNotifications: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
-    staff: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
-    schedule: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
-    auth: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+    master: [{ type: String }], //all rights
+    pushNotifications: [{ type: String }],
+    staff: [{ type: String }],
+    schedule: [{ type: String }],
+    auth: [{ type: String }],
   }, //(also required to be assigned to store number)
   locationIdentifier: { type: String }, //what do you call this store (ie. Denver I25 store, store 1203, ext)
   imageUrl: { type: String },
