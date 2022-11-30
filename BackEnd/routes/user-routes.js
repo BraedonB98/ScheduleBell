@@ -18,7 +18,7 @@ router.post("/position", userController.addPosition);
 
 router.patch("/position", userController.editPosition);
 
-router.delete("/position", userController.removePosition);
+router.delete("/position", userController.resignPosition);
 
 router.patch("/availability", userController.editAvailability);
 

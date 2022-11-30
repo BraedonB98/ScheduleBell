@@ -188,7 +188,7 @@ const createUser = async (req, res, next) => {
 const editGeneral = async (req, res, next) => {};
 const addPosition = async (req, res, next) => {};
 const editPosition = async (req, res, next) => {};
-const removePosition = async (req, res, next) => {};
+const resignPosition = async (req, res, next) => {};
 const editAvailability = async (req, res, next) => {};
 const getGeneral = async (req, res, next) => {};
 const getPositions = async (req, res, next) => {};
@@ -200,7 +200,7 @@ exports.createUser = createUser;
 exports.editGeneral = editGeneral;
 exports.addPosition = addPosition;
 exports.editPosition = editPosition;
-exports.removePosition = removePosition;
+exports.resignPosition = resignPosition;
 exports.editAvailability = editAvailability;
 exports.getGeneral = getGeneral;
 exports.getPositions = getPositions;

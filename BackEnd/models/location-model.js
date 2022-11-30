@@ -6,7 +6,14 @@ const locationSchema = new Schema({
   name: { type: String },
   notifications: [{ type: String }], //things that the user should be notified about.
   organization: { type: mongoose.Types.ObjectId, ref: "Organization" },
-  authorizedPositions: [{ type: mongoose.Types.ObjectId, ref: "Position" }], // only people with specific titles can edit location(also required to be assigned to store number)
+  auth: {
+    //position permissions
+    master: [{ type: mongoose.Types.ObjectId, ref: "Position" }], //all rights
+    pushNotifications: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+    staff: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+    schedule: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+    auth: [{ type: mongoose.Types.ObjectId, ref: "Position" }],
+  }, //(also required to be assigned to store number)
   locationIdentifier: { type: String }, //what do you call this store (ie. Denver I25 store, store 1203, ext)
   imageUrl: { type: String },
   location: {
