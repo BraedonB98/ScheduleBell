@@ -1,4 +1,4 @@
-const httpErrorLog = require("../shared/Logs/loggers");
+const httpErrorLog = require("../shared/log/loggers");
 
 class HttpError extends Error {
   constructor(message, errorCode) {
