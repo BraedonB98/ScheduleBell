@@ -19,7 +19,7 @@ const organizationSchema = new Schema({
   imageUrl: { type: String },
   subscription: { type: String }, //Trial, (then subscription options), DevApproved(free but full feature)
   notes: { type: String },
-  locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }],
+  locations: [{ type: mongoose.Types.ObjectId, ref: "Location" }], //location 0 is corporate staff
   organizationColorScheme: { type: mongoose.Types.ObjectId, ref: "Color" },
 });
 

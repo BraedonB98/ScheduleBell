@@ -154,7 +154,7 @@ const editOrganizationGeneral = async (req, res, next) => {
   }
   res.json(organization);
 };
-const editOrganizationAccountType = async (req, res, next) => {
+const editSubscription = async (req, res, next) => {
   //!set timeout 1 month(rerun payment if fail cancel, else reset timeout)
 };
 const editAuth = async (req, res, next) => {
@@ -201,11 +201,7 @@ const editAuth = async (req, res, next) => {
   }
   res.json(organization);
 };
-const removeOrganizationAuthorizedUser = async (req, res, next) => {
-  //if removing accountAdmin: check req.body for new accountAdmin and only allow if authorizedUsers
-  const { userRemoving, accountAdmin } = req.body;
-};
-const patchOrganizationImage = async (req, res, next) => {
+const patchImage = async (req, res, next) => {
   const { imageUrl } = req.body;
   const uid = req.userData.id;
   //getting requesting user
@@ -249,7 +245,7 @@ const patchOrganizationImage = async (req, res, next) => {
 const deleteOrganization = async (req, res, next) => {
   //this will need to go through and remove all locations from database as well as locations ids from all users listed at each location(and alts)
 };
-const getOrganizationGeneral = async (req, res, next) => {
+const getGeneral = async (req, res, next) => {
   const uid = req.userData.id;
   //getting requesting user
   let user = await getUser(uid, "id");
@@ -273,7 +269,7 @@ const getOrganizationGeneral = async (req, res, next) => {
   }
   res.json(organization);
 };
-const getOrganizationAccountType = async (req, res, next) => {
+const getSubscription = async (req, res, next) => {
   const uid = req.userData.id;
   //getting requesting user
   let user = await getUser(uid, "id");
@@ -300,10 +296,9 @@ const getOrganizationAccountType = async (req, res, next) => {
 //---------------------Exports------------------------------
 exports.create = createOrganization;
 exports.editGeneral = editOrganizationGeneral;
-exports.editAccountType = editOrganizationAccountType;
+exports.editSubscription = editSubscription;
 exports.editAuth = editAuth;
-exports.removeAuthorizedUser = removeOrganizationAuthorizedUser;
-exports.patchImage = patchOrganizationImage;
+exports.patchImage = patchImage;
 exports.delete = deleteOrganization;
-exports.getGeneral = getOrganizationGeneral;
-exports.getAccountType = getOrganizationAccountType;
+exports.getGeneral = getGeneral;
+exports.getSubscription = getSubscription;

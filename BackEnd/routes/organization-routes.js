@@ -6,17 +6,15 @@ const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
-router.post("/create", organizationController.create);
-
 router.use(checkAuth); // every route after this requires an token
+
+router.post("/create", organizationController.create);
 
 router.patch("/general/:oid", organizationController.editGeneral); //name, image, colorScheme
 
-router.patch("/accountType/:oid", organizationController.editAccountType); //upgrade subscription
+router.patch("/subscription/:oid", organizationController.editSubscription); //upgrade subscription
 
 router.patch("/editAuth/:oid", organizationController.editAuth); //add admin (email added)
-
-router.patch("/removeAdmins/:oid", organizationController.removeAuthorizedUser); //remove admin(email removed)
 
 router.patch("/image/:oid", organizationController.patchImage);
 
@@ -24,6 +22,6 @@ router.delete("/remove/:oid", organizationController.delete); //!have a timeout 
 
 router.get("/general/:oid", organizationController.getGeneral);
 
-router.get("/accountType/:oid", organizationController.getAccountType);
+router.get("/subscription/:oid", organizationController.getSubscription);
 
 module.exports = router;
